@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/BitcoinUmrechner.iml" filepath="$PROJECT_DIR$/BitcoinUmrechner.iml" />
+      <module fileurl="file://D:\Anwendungsentwicklung\bitcoinRechner\BitcoinUmrechner.iml" filepath="D:\Anwendungsentwicklung\bitcoinRechner\BitcoinUmrechner.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bitcoinRechner.iml" filepath="$PROJECT_DIR$/bitcoinRechner.iml" />
     </modules>
   </component>
 </project>

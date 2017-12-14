@@ -8,10 +8,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+
 public class MainActivity extends Activity {
 
     private EditText et_euro, et_bitcoin;
-    private Button btn_umrechnen;
+    private Button btn_umrechnen, btn_KursAktualisieren;
     private double faktorBitcoinKursInEuro = 8919.0;
     private boolean euroLock;
     private boolean bitcoinLock;
@@ -104,6 +112,15 @@ public class MainActivity extends Activity {
             }
         });
 
+        btn_KursAktualisieren = findViewById(R.id.btn_KursAktualisieren);
+        btn_KursAktualisieren.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Thread(new MeinKursThread()).start();
+                System.out.println("test");
+            }
+        });
+
     }
 
     /**
@@ -122,6 +139,37 @@ public class MainActivity extends Activity {
      */
     private double bitcoinEuroUmrechnen (double betragInBitcoin){
         return faktorBitcoinKursInEuro * betragInBitcoin;
+    }
+
+    public class MeinKursThread implements Runnable{
+
+        @Override
+        public void run() {
+            InputStream inputStream = null;
+            URLConnection urlConnection = null;
+            try {
+                URL url = new URL("https://bitaps.com/api/ticker/average");
+                urlConnection = url.openConnection();
+                inputStream = urlConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                String jasonZeile = null;
+                while((jasonZeile = bufferedReader.readLine())!=null){
+                    System.out.println(jasonZeile);
+                }
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }finally {
+                if(inputStream != null){
+                    try {
+                        inputStream.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
     }
 
 
